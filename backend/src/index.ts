@@ -15,4 +15,4 @@ app.get('/me', authenticateJWT, async (req: AuthenticatedRequest, res) => {
     res.json({ message: `Usuário autenticado: ${req.userId}` })
 })
 
-app.listen(3000, () => console.log('Servidor rodando na porta 3000'))
+app.listen(4000, () => console.log('Servidor rodando na porta 4000'))

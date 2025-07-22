@@ -3,7 +3,7 @@ version: '3.8'
 services:
   db:
     image: postgres:16
-    container_name: postgres
+    container_name: postgres_anki
     restart: always
     environment:
       POSTGRES_USER: postgres
@@ -16,7 +16,7 @@ services:
 
   backend:
     build: ./backend
-    container_name: backend
+    container_name: backend_anki
     depends_on:
       - db
     environment:
@@ -30,7 +30,7 @@ services:
 
   frontend:
     build: ./frontend
-    container_name: frontend
+    container_name: frontend_anki
     depends_on:
       - backend
     ports:
