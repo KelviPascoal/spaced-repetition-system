@@ -7,21 +7,19 @@ const router = express.Router()
 const prisma = new PrismaClient()
 
 router.post('/register', async (req, res) => {
-    const { email, name, username, password } = req.body
+    const { email, name, password } = req.body
 
     const existingUser = await prisma.user.findFirst({
-        where: {
-            OR: [{ email }, { username }]
-        }
+        where: { email }
     })
     if (existingUser) {
-        return res.status(400).json({ error: 'Email ou username já em uso' })
+        return res.status(400).json({ error: 'Email já está sendo usado' })
     }
 
     const hashed = await hashPassword(password)
 
     const user = await prisma.user.create({
-        data: { email, name, username, password: hashed }
+        data: { email, name, password: hashed }
     })
 
     const token = generateToken({ userId: user.id })
@@ -31,18 +29,15 @@ router.post('/register', async (req, res) => {
             id: user.id,
             name: user.name,
             email: user.email,
-            username: user.username
         }
     })
 })
 
 router.post('/login', async (req, res) => {
-    const { identifier, password } = req.body
+    const { email, password } = req.body
 
     const user = await prisma.user.findFirst({
-        where: {
-            OR: [{ email: identifier }, { username: identifier }]
-        }
+        where: { email }
     })
 
     if (!user) {
@@ -61,7 +56,6 @@ router.post('/login', async (req, res) => {
             id: user.id,
             name: user.name,
             email: user.email,
-            username: user.username
         }
     })
 })

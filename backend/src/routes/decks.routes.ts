@@ -1,4 +1,4 @@
-import { Router } from 'express'
+import { Request, Router } from 'express'
 import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
@@ -6,13 +6,14 @@ const router = Router()
 
 // Criar um novo deck para um usuário
 router.post('/', async (req, res) => {
-    const { userId, title, description } = req.body
+    const { title, description } = req.body
+    const { userId } = req
     try {
         const deck = await prisma.deck.create({
             data: {
                 title,
                 description,
-                userId
+                userId: String(userId)
             }
         })
         res.status(201).json(deck)
@@ -22,8 +23,8 @@ router.post('/', async (req, res) => {
 })
 
 // Buscar todos os decks de um usuário
-router.get('/user/:userId', async (req, res) => {
-    const { userId } = req.params
+router.get('/user/', async (req, res) => {
+    const { userId } = req
     try {
         const decks = await prisma.deck.findMany({
             where: { userId },
