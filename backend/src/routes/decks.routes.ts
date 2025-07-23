@@ -27,7 +27,6 @@ router.get('/user/:userId', async (req, res) => {
     try {
         const decks = await prisma.deck.findMany({
             where: { userId },
-            include: { cards: true }
         })
         res.json(decks)
     } catch (error) {

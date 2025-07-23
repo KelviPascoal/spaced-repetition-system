@@ -17,19 +17,6 @@ router.post('/', async (req, res) => {
     }
 })
 
-// Buscar todos os cards de um deck
-router.get('/deck/:deckId', async (req, res) => {
-    const { deckId } = req.params
-    try {
-        const cards = await prisma.card.findMany({
-            where: { deckId }
-        })
-        res.json(cards)
-    } catch (error) {
-        res.status(500).json({ error: 'Erro ao buscar cards' })
-    }
-})
-
 // Buscar um card específico
 router.get('/:cardId', async (req, res) => {
     const { cardId } = req.params
