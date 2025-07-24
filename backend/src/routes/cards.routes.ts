@@ -6,6 +6,11 @@ const router = Router()
 
 // Criar um novo card dentro de um deck
 router.post('/', async (req, res) => {
+    const userId = req.user?.id
+    const deck = prisma.deck.findFirst({ where: { userId } })
+
+    if (!deck) return res.status(403).json({ error: 'Você não tem permissão para adicionar cards neste deck' })
+
     const { deckId, front, back } = req.body
     try {
         const card = await prisma.card.create({
@@ -19,13 +24,14 @@ router.post('/', async (req, res) => {
 
 // Buscar um card específico
 router.get('/:cardId', async (req, res) => {
+    const userId = req.user?.id
     const { cardId } = req.params
     try {
         const card = await prisma.card.findUnique({
-            where: { id: cardId }
+            where: { id: Number(cardId), deck: { userId } }
         })
         if (!card) return res.status(404).json({ error: 'Card não encontrado' })
-        res.json(card)
+        res.status(200).json(card)
     } catch (error) {
         res.status(500).json({ error: 'Erro ao buscar card' })
     }
@@ -33,14 +39,15 @@ router.get('/:cardId', async (req, res) => {
 
 // Atualizar um card
 router.put('/:cardId', async (req, res) => {
+    const userId = req.user?.id
     const { cardId } = req.params
     const { front, back } = req.body
     try {
         const updated = await prisma.card.update({
-            where: { id: cardId },
+            where: { id: Number(cardId), deck: { userId: userId } },
             data: { front, back }
         })
-        res.json(updated)
+        res.status(200).json(updated)
     } catch (error) {
         res.status(500).json({ error: 'Erro ao atualizar card' })
     }
@@ -48,9 +55,10 @@ router.put('/:cardId', async (req, res) => {
 
 // Deletar um card
 router.delete('/:cardId', async (req, res) => {
+    const userId = req.user?.id
     const { cardId } = req.params
     try {
-        await prisma.card.delete({ where: { id: cardId } })
+        await prisma.card.delete({ where: { id: Number(cardId), deck: { userId } } })
         res.status(204).send()
     } catch (error) {
         res.status(500).json({ error: 'Erro ao deletar card' })

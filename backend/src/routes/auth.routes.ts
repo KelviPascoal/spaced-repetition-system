@@ -22,9 +22,7 @@ router.post('/register', async (req, res) => {
         data: { email, name, password: hashed }
     })
 
-    const token = generateToken({ userId: user.id })
     res.json({
-        token,
         user: {
             id: user.id,
             name: user.name,
@@ -48,9 +46,8 @@ router.post('/login', async (req, res) => {
     if (!valid) {
         return res.status(400).json({ error: 'Credenciais inválidas' })
     }
-
     const token = generateToken({ userId: user.id })
-    res.json({
+    res.status(200).json({
         token,
         user: {
             id: user.id,

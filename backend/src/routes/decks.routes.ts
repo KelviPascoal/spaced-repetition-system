@@ -1,4 +1,4 @@
-import { Request, Router } from 'express'
+import { Router } from 'express'
 import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
@@ -7,7 +7,7 @@ const router = Router()
 // Criar um novo deck para um usuário
 router.post('/', async (req, res) => {
     const { title, description } = req.body
-    const { userId } = req
+    const userId = req.user?.id
     try {
         const deck = await prisma.deck.create({
             data: {
@@ -23,13 +23,13 @@ router.post('/', async (req, res) => {
 })
 
 // Buscar todos os decks de um usuário
-router.get('/user/', async (req, res) => {
-    const { userId } = req
+router.get('/user', async (req, res) => {
+    const userId = req.user?.id
     try {
         const decks = await prisma.deck.findMany({
             where: { userId },
         })
-        res.json(decks)
+        res.status(200).json(decks)
     } catch (error) {
         res.status(500).json({ error: 'Erro ao buscar decks' })
     }
@@ -37,14 +37,15 @@ router.get('/user/', async (req, res) => {
 
 // Buscar um deck específico por ID
 router.get('/:deckId', async (req, res) => {
+    const userId = req.user?.id
     const { deckId } = req.params
     try {
         const deck = await prisma.deck.findUnique({
-            where: { id: deckId },
+            where: { id: Number(deckId), userId },
             include: { cards: true }
         })
         if (!deck) return res.status(404).json({ error: 'Deck não encontrado' })
-        res.json(deck)
+        res.status(200).json(deck)
     } catch (error) {
         res.status(500).json({ error: 'Erro ao buscar deck' })
     }
@@ -52,14 +53,15 @@ router.get('/:deckId', async (req, res) => {
 
 // Atualizar um deck
 router.put('/:deckId', async (req, res) => {
+    const userId = req.user?.id
     const { deckId } = req.params
     const { title, description } = req.body
     try {
         const updatedDeck = await prisma.deck.update({
-            where: { id: deckId },
+            where: { id: Number(deckId), userId },
             data: { title, description }
         })
-        res.json(updatedDeck)
+        res.status(200).json(updatedDeck)
     } catch (error) {
         res.status(500).json({ error: 'Erro ao atualizar deck' })
     }
@@ -67,10 +69,10 @@ router.put('/:deckId', async (req, res) => {
 
 // Deletar um deck e seus cards
 router.delete('/:deckId', async (req, res) => {
+    const userId = req.user?.id
     const { deckId } = req.params
     try {
-        await prisma.card.deleteMany({ where: { deckId } })
-        await prisma.deck.delete({ where: { id: deckId } })
+        await prisma.deck.delete({ where: { id: Number(deckId), userId: userId } })
         res.status(204).send()
     } catch (error) {
         res.status(500).json({ error: 'Erro ao deletar deck' })

@@ -31,7 +31,7 @@ export function authenticateJWT(
 
     try {
         const userId = getUserIdFromToken(token)
-        req.userId = userId
+        req.user = { id: userId }
         next()
     } catch (err) {
         return res.status(403).json({ error: 'Token inválido' })

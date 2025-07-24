@@ -6,16 +6,8 @@ import cardRoutes from './routes/cards.routes'
 import { authenticateJWT } from './middleware/authMiddleware'
 
 dotenv.config()
-
 const app = express()
 app.use(express.json())
-
-app.use('/auth', authRoutes)
-
-// Exemplo de rota protegida
-app.get('/me', authenticateJWT, async (req, res) => {
-    res.json({ message: `Usuário autenticado: ${req.userId}` })
-})
 
 // Middleware de autenticação global, exceto para /auth
 app.use((req, res, next) => {
@@ -25,10 +17,14 @@ app.use((req, res, next) => {
     authenticateJWT(req, res, next)
 })
 
+
+// rota de teste
+app.get('/me', authenticateJWT, async (req, res) => {
+    res.json({ message: `Usuário autenticado: ${req.user.id}` })
+})
+
+app.use('/auth', authRoutes)
 app.use('/decks', deckRoutes)
 app.use('/cards', cardRoutes)
-
-
-
 
 app.listen(4000, () => console.log('Servidor rodando na porta 4000'))
