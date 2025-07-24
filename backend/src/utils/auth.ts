@@ -7,6 +7,10 @@ import jwt, { JwtPayload, SignOptions, Secret } from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 import dotenv from 'dotenv'
 
+type SignProps = {
+    userID: string
+}
+
 dotenv.config()
 
 const JWT_SECRET: Secret = process.env.JWT_SECRET || ''
@@ -22,7 +26,7 @@ export function comparePassword(password: string, hash: string): Promise<boolean
     return bcrypt.compare(password, hash)
 }
 
-export function generateToken(payload: object): string {
+export function generateToken(payload: SignProps): string {
     const options: SignOptions = { expiresIn: '1d' }
     return jwt.sign(payload, JWT_SECRET, options)
 }

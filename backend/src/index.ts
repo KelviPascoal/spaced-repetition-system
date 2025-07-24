@@ -17,12 +17,6 @@ app.use((req, res, next) => {
     authenticateJWT(req, res, next)
 })
 
-
-// rota de teste
-app.get('/me', authenticateJWT, async (req, res) => {
-    res.json({ message: `Usuário autenticado: ${req.user.id}` })
-})
-
 app.use('/auth', authRoutes)
 app.use('/decks', deckRoutes)
 app.use('/cards', cardRoutes)
