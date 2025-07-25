@@ -21,7 +21,7 @@ model Deck {
     id          Int      @id @default(autoincrement())
     title       String
     description String?
-    user        User     @relation(fields: [userId], references: [id], onDelete: Cascade) // ver se tem padrão
+    user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
     userId      String
     cards       Card[]
     createdAt   DateTime @default(now())

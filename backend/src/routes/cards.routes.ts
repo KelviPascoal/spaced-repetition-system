@@ -7,11 +7,12 @@ const router = Router()
 // Criar um novo card dentro de um deck
 router.post('/', async (req, res) => {
     const userId = req.user?.id
-    const deck = prisma.deck.findFirst({ where: { userId } })
+    const { deckId, front, back } = req.body
+
+    const deck = prisma.deck.findFirst({ where: { userId, id: deckId } })
 
     if (!deck) return res.status(403).json({ error: 'Você não tem permissão para adicionar cards neste deck' })
 
-    const { deckId, front, back } = req.body
     try {
         const card = await prisma.card.create({
             data: { front, back, deckId }
@@ -30,8 +31,10 @@ router.get('/:cardId', async (req, res) => {
         const card = await prisma.card.findUnique({
             where: { id: Number(cardId), deck: { userId } }
         })
+
         if (!card) return res.status(404).json({ error: 'Card não encontrado' })
         res.status(200).json(card)
+
     } catch (error) {
         res.status(500).json({ error: 'Erro ao buscar card' })
     }
@@ -44,7 +47,7 @@ router.put('/:cardId', async (req, res) => {
     const { front, back } = req.body
     try {
         const updated = await prisma.card.update({
-            where: { id: Number(cardId), deck: { userId: userId } },
+            where: { id: Number(cardId), deck: { userId } },
             data: { front, back }
         })
         res.status(200).json(updated)

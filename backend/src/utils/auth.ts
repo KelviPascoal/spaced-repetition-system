@@ -1,14 +1,10 @@
-// Importa a biblioteca jsonwebtoken e tipos auxiliares:
-// - JwtPayload: tipo da carga útil (payload) ao decodificar um token
-// - SignOptions: opções como tempo de expiração ao assinar o token
-// - Secret: tipo aceito para a chave secreta (string ou buffer)
 import jwt, { JwtPayload, SignOptions, Secret } from 'jsonwebtoken'
 
 import bcrypt from 'bcrypt'
 import dotenv from 'dotenv'
 
 type SignProps = {
-    userID: string
+    userId: string
 }
 
 dotenv.config()
