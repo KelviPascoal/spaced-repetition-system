@@ -23,17 +23,46 @@ export const theme = {
         }
     },
     colors: {
-        primary: '#F231A5',
-        secondary: '#3CD3C1',
-        mainBg: '#06092B',
-        lightBg: '#F2F2F2',
-        white: '#FAFAFA',
-        black: '#030517',
-        lightGray: '#EAEAEA',
-        gray: '#8F8F8F',
-        darkGray: '#2E2F42',
-        red: '#FF6347'
+        brand: {
+            primary: '#9701ef',
+            secondary: '#3CD3C1',
+        },
+        background: {
+            base: '#ffffff',       // fundo da página
+            surface: '#F2F2F2',    // áreas internas (cards, painéis)
+            muted: '#f0f6fb',      // fundos mais discretos
+        },
+        text: {
+            primary: '#11111d',    // quase preto
+            secondary: '#8F8F8F',  // cinza
+            inverted: '#FAFAFA',   // texto sobre fundos escuros
+        },
+        border: {
+            light: '#f0f6fb',
+            default: '#8F8F8F',
+            dark: '#2E2F42',
+        },
+        feedback: {
+            danger: '#FF6347',
+        },
+        neutral: {
+            white: '#FAFAFA',
+            black: '#11111d',
+            gray: '#8F8F8F',
+            darkGray: '#2E2F42',
+        },
+        cards: {
+            blue: '#386cf7',
+            green: '#00c67e',
+            yellow: '#ff9b00',
+            red: '#ff0040',
+            purple: '#a300f8',
+            lightBlue: '#00b9d5',
+            orange: '#fe6203',
+            lightGreen: '#46dc00',
+        },
     },
+
     spacings: {
         xxsmall: '0.8rem',
         xsmall: '1.6rem',

@@ -40,6 +40,7 @@ module.exports = {
     'react/react-in-jsx-scope': 'off',
     'react/prop-types': 'off',
     '@typescript-eslint/no-unused-vars': 'warn',
+    '@typescript-eslint/no-unused-expressions': 'off', // <- Desabilitada para evitar erro no Storybook
 
     // Imports não usados
     'unused-imports/no-unused-imports': 'error',
