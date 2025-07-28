@@ -4,7 +4,7 @@ type GlobalStylesProps = {
   removeBg?: boolean
 }
 
-const GlobalStyles = createGlobalStyle<GlobalStylesProps>`
+export const GlobalStyles = createGlobalStyle<GlobalStylesProps>`
   @font-face {
     font-family: 'Poppins';
     font-style: normal;
@@ -62,5 +62,3 @@ const GlobalStyles = createGlobalStyle<GlobalStylesProps>`
   `}
 
 `
-
-export default GlobalStyles

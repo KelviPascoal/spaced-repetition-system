@@ -1,3 +1,11 @@
+const breakpoints = {
+    xs: '425px',
+    sm: '640px',
+    md: '768px',
+    lg: '1024px',
+    xl: '1280px',
+}
+
 export const theme = {
     grid: {
         container: '130rem',
@@ -82,5 +90,6 @@ export const theme = {
     transition: {
         default: '0.3s ease-in-out',
         fast: '0.1s ease-in-out'
-    }
+    },
+    breakpoints
 }

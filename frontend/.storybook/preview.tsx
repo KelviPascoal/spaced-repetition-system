@@ -1,11 +1,11 @@
 import type { Preview } from '@storybook/react-webpack5';
 import { ThemeProvider } from 'styled-components';
 import { theme } from '../src/styles/theme';
-import GlobalStyle from '../src/styles/global';
+import { GlobalStyles } from '../src/styles/global'
 
 const withThemeProvider = (Story) => (
   <ThemeProvider theme={theme} >
-    <GlobalStyle />
+    <GlobalStyles />
     < Story />
   </ThemeProvider>
 );

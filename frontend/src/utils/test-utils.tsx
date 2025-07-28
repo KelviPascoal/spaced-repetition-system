@@ -3,6 +3,7 @@ import { render as rtlRender, RenderOptions } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
 import { theme } from '../styles/theme';
 import '@testing-library/jest-dom';
+import { GlobalStyles } from '../styles/global';
 
 type AllTheProvidersProps = {
   children: ReactNode;
@@ -11,6 +12,7 @@ type AllTheProvidersProps = {
 function AllTheProviders({ children }: AllTheProvidersProps) {
   return (
     <ThemeProvider theme={theme}>
+      <GlobalStyles />
       {children}
     </ThemeProvider>
   );
