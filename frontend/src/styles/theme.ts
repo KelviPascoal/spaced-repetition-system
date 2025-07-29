@@ -12,7 +12,7 @@ export const theme = {
         gutter: '3.2rem'
     },
     border: {
-        radius: '0.4rem'
+        radius: '1rem'
     },
     font: {
         family:
@@ -60,6 +60,8 @@ export const theme = {
             darkGray: '#2E2F42',
         },
         cards: {
+            primary: '#9701ef',
+            secondary: '#3CD3C1',
             blue: '#386cf7',
             green: '#00c67e',
             yellow: '#ff9b00',
