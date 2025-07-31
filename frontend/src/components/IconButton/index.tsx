@@ -1,8 +1,7 @@
-// src/components/IconBox/styles.ts
 import styled, { css, DefaultTheme } from 'styled-components'
 import { darken } from 'polished'
 
-type ColorPalette =
+export type ColorPalette =
   'primary' |
   'secondary' |
   'blue' |
@@ -15,7 +14,7 @@ type ColorPalette =
   'lightGreen'
 
 
-export type IconBoxProps = {
+export type IconButtonProps = {
   size?: 'small' | 'medium' | 'large'
   variant?: 'solid' | 'surface' | 'outline' | 'ghost'
   colorPalette?: ColorPalette
@@ -25,7 +24,7 @@ export type IconBoxProps = {
 
 
 
-const iconBoxModifiers = {
+const iconButtonModifiers = {
   small: (theme: DefaultTheme) => css`
     width: 3rem;
     height: 3rem;
@@ -44,15 +43,15 @@ const iconBoxModifiers = {
 
   variants: {
     solid: (theme: DefaultTheme, colorPalette: ColorPalette) => css`
-      background-color: ${theme.colors.cards[colorPalette]};
+      background-color: ${theme.colors.palettes[colorPalette]};
       color: ${theme.colors.text.inverted};
 
       &:hover {
-        background-color: ${darken(0.1, theme.colors.cards[colorPalette])};
+        background-color: ${darken(0.1, theme.colors.palettes[colorPalette])};
         color: ${darken(0.1, theme.colors.text.inverted)};
       }
     `,
-    surface: (theme: DefaultTheme, colorPalette: ColorPalette) => css`
+    surface: (theme: DefaultTheme) => css`
       background-color: ${theme.colors.neutral.white};
       color: ${theme.colors.text.primary};
 
@@ -62,8 +61,8 @@ const iconBoxModifiers = {
     `,
     outline: (theme: DefaultTheme, colorPalette: ColorPalette) => css`
       background-color: transparent;
-      color: ${theme.colors.cards[colorPalette]};
-      border: 1px solid ${theme.colors.cards[colorPalette]};
+      color: ${theme.colors.palettes[colorPalette]};
+      border: 1px solid ${theme.colors.palettes[colorPalette]};
 
       &:hover {
         background-color: ${darken(0.05, theme.colors.neutral.white)};
@@ -85,8 +84,16 @@ const iconBoxModifiers = {
   `
 }
 
-export const IconBox = styled.div<IconBoxProps>`
+export const IconButton = styled.button<IconButtonProps>`
   ${({ theme, size = 'medium', variant = 'solid', colorPalette = 'primary', disabled, clickable }) => css`
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    color: inherit;
+    outline: none;
+
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -94,8 +101,8 @@ export const IconBox = styled.div<IconBoxProps>`
     cursor: ${clickable ? 'pointer' : 'default'};
     transition: background-color 0.2s ease;
 
-    ${iconBoxModifiers[size](theme)};
-    ${iconBoxModifiers.variants[variant](theme, colorPalette)};
-    ${disabled && iconBoxModifiers.disabled()};
+    ${iconButtonModifiers[size](theme)};
+    ${iconButtonModifiers.variants[variant](theme, colorPalette)};
+    ${disabled && iconButtonModifiers.disabled()};
   `}
 `

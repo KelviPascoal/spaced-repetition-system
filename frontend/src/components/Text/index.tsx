@@ -9,7 +9,7 @@ export interface TextProps extends React.HTMLAttributes<HTMLElement> {
   children: React.ReactNode;
   size?: TextSize;
   truncate?: boolean;
-  maxWidth?: string;
+  maxW?: string;
   fontWeight?: TextWeight
 }
 
@@ -42,7 +42,7 @@ const weightStyles = {
 
 
 export const Text = styled.span<TextProps>`
-  ${({ size = 'medium', fontWeight, truncate, maxWidth }) => css`
+  ${({ size = 'medium', fontWeight, truncate, maxW }) => css`
     ${size && sizeStyles[size]}
     ${fontWeight && weightStyles[fontWeight]}
 
@@ -52,9 +52,7 @@ export const Text = styled.span<TextProps>`
       overflow: hidden;
       text-overflow: ellipsis;
       display: inline-block;
-      max-width: ${maxWidth || '100%'};
+      max-width: ${maxW || '100%'};
     `}
   `}
 `
-
-

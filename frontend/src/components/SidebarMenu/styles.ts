@@ -1,4 +1,5 @@
-import styled from 'styled-components'
+import { NavLink } from 'react-router-dom'
+import styled, { css } from 'styled-components'
 
 export const Aside = styled.aside`
   width: 240px;
@@ -24,3 +25,31 @@ export const NavList = styled.ul`
 
 export const NavItem = styled.li``
 
+export const Link = styled(NavLink)`
+${({ theme }) => css`
+  padding: 0 1rem;
+
+  position: relative;
+  transition: all ${theme.transition.default} ease;
+  cursor: pointer;
+  overflow: hidden;
+
+  &::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 0.6rem;
+    height: 0%;
+    background-color: ${theme.colors.palettes.primary};
+    transition: height 0.3s ease;
+    border-radius: ${theme.border.radius}
+  }
+
+  &:hover::after,
+  &.active::after {
+    height: 100%;
+  }
+`}
+
+`

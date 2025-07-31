@@ -1,4 +1,3 @@
-// components/FormField/FormField.styles.ts
 import styled, { css } from 'styled-components'
 
 type WrapperProps = {
@@ -13,7 +12,7 @@ export const Container = styled.div`
 `
 
 export const Label = styled.label`
-${({ theme }) => css` 
+${({ theme }) => css`
   margin-bottom: 0.4rem;
   font-size: ${theme.font.sizes.small};
   `}
@@ -36,7 +35,7 @@ ${({ theme, hasError, hasIcon, }) => css`
   ${hasError && css`
       border-color: ${theme.colors.feedback.danger};
     `}
-    `} 
+    `}
 `
 
 export const Icon = styled.div`
@@ -46,7 +45,7 @@ export const Icon = styled.div`
 `
 
 export const HelperText = styled.span`
-${({ theme }) => css` 
+${({ theme }) => css`
   color: ${theme.colors.feedback.danger};
   font-size: ${theme.font.sizes.small};
   margin-top: 0.25rem;
