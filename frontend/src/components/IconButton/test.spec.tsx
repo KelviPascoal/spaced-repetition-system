@@ -1,5 +1,5 @@
 // IconBox.test.tsx
-import { theme } from 'src/styles/theme'
+import { theme } from '../../styles/theme'
 import { render } from '../../utils/test-utils'
 import { ColorPalette, IconButton } from './'
 import { parseToRgb } from 'polished'
